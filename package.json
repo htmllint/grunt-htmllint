@@ -3,10 +3,6 @@
   "description": "HTML5 linter and validator.",
   "version": "0.1.0",
   "homepage": "https://github.com/htmllint/grunt-htmllint",
-  "author": {
-    "name": "Coalman",
-    "email": "tehcoalman@gmail.com"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/htmllint/grunt-htmllint.git"
