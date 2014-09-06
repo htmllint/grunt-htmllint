@@ -2,36 +2,43 @@
 
 module.exports = function(grunt) {
     grunt.registerMultiTask('htmllint', 'HTML5 linter and validator.', function () {
+        var htmllint = require('htmllint');
+
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
-            punctuation: '.',
-            separator: ', '
+            force: false
         });
 
-        // Iterate over all specified file groups.
-        this.files.forEach(function(f) {
-            // Concat specified files.
-            var src = f.src.filter(function(filepath) {
-                // Warn on and remove invalid source files (if nonull was set).
-                if (!grunt.file.exists(filepath)) {
-                    grunt.log.warn('Source file "' + filepath + '" not found.');
-                    return false;
-                } else {
-                    return true;
-                }
-            }).map(function(filepath) {
-                // Read file source.
-                return grunt.file.read(filepath);
-            }).join(grunt.util.normalizelf(options.separator));
+        // whether or not we should fail the task on linting errors
+        var force = options.force;
+        delete options.force; // delete it, don't want to interfere with htmllint opts
 
-            // Handle options.
-            src += options.punctuation;
+        this.filesSrc.forEach(function (filePath) {
+            if (!grunt.file.exists(filePath)) {
+                grunt.log.warn('Source file "' + filePath + '" not found.');
+                return;
+            }
 
-            // Write the destination file.
-            grunt.file.write(f.dest, src);
+            var fileSrc = grunt.file.read(filePath),
+                issues = htmllint(fileSrc, options);
 
-            // Print a success message.
-            grunt.log.writeln('File "' + f.dest + '" created.');
+            issues.forEach(function (issue) {
+                var logMsg = grunt.template.process([
+                    '<%= filePath %> ', // start with file path
+                    '(<%= issue.line %>, <%= issue.index %>): ', // print error location
+                    '<%= issue.msg %>' // then print the message
+                ].join(''), { // options
+                    data: {
+                        filePath: filePath,
+                        issue: issue
+                    }
+                });
+                grunt.log.error(logMsg);
+            });
         });
+
+        if (this.errorCount && !force) {
+            return false;
+        }
     });
 };
