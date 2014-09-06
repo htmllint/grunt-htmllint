@@ -1,5 +1,7 @@
 # grunt-htmllint
 
+[![Stories in Ready](https://badge.waffle.io/htmllint/grunt-htmllint.svg?label=ready&title=Ready)](http://waffle.io/htmllint/grunt-htmllint)
+
 > HTML5 linter and validator.
 
 ## Getting Started
