@@ -14,12 +14,7 @@
   "bugs": {
     "url": "https://github.com/htmllint/grunt-htmllint/issues"
   },
-  "licenses": [
-    {
-      "type": "ISC",
-      "url": "https://github.com/htmllint/grunt-htmllint/blob/master/LICENSE-ISC"
-    }
-  ],
+  "licenses": "ISC",
   "engines": {
     "node": ">= 0.8.0"
   },

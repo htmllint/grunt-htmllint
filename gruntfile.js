@@ -1,11 +1,3 @@
-/*
- * grunt-htmllint
- * https://github.com/htmllint/grunt-htmllint
- *
- * Copyright (c) 2014 Coalman
- * Licensed under the ISC license.
- */
-
 'use strict';
 
 module.exports = function(grunt) {
