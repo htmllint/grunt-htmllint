@@ -6,27 +6,32 @@ module.exports = function(grunt) {
 
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
-            force: false
+            force: false,
+            opts: null
         });
 
-        // whether or not we should fail the task on linting errors
-        var force = options.force;
-        delete options.force; // delete it, don't want to interfere with htmllint opts
+        var force = options.force,
+            lintOpts = options.opts || {},
+            maxerr = lintOpts.maxerr;
 
-        this.filesSrc.forEach(function (filePath) {
+        this.filesSrc.every(function (filePath) {
             if (!grunt.file.exists(filePath)) {
                 grunt.log.warn('Source file "' + filePath + '" not found.');
-                return;
+                return true;
             }
+
+            lintOpts.maxerr = maxerr;
 
             var fileSrc = grunt.file.read(filePath),
                 issues = htmllint(fileSrc, options);
 
+            maxerr -= issues.length;
+
             issues.forEach(function (issue) {
                 var logMsg = grunt.template.process([
-                    '<%= filePath %> ', // start with file path
-                    '(<%= issue.line %>, <%= issue.index %>): ', // print error location
-                    '<%= issue.msg %>' // then print the message
+                    '<%= filePath %>: ',
+                    'line <%= issue.line %>, col <%= issue.column %>, ',
+                    '<%= issue.msg %>'
                 ].join(''), { // options
                     data: {
                         filePath: filePath,
@@ -35,6 +40,8 @@ module.exports = function(grunt) {
                 });
                 grunt.log.error(logMsg);
             });
+
+            return maxerr > 0;
         });
 
         if (this.errorCount && !force) {
