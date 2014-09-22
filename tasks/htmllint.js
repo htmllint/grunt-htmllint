@@ -1,5 +1,11 @@
 'use strict';
 
+var reportTemplate = [
+    '<%= filePath %>: ',
+    'line <%= issue.line %>, col <%= issue.column %>, ',
+    '<%= issue.msg %>'
+].join('');
+
 module.exports = function(grunt) {
     grunt.registerMultiTask('htmllint', 'HTML5 linter and validator.', function () {
         var htmllint = require('htmllint');
@@ -11,8 +17,11 @@ module.exports = function(grunt) {
         });
 
         var force = options.force,
-            lintOpts = options.opts || {},
-            maxerr = lintOpts.maxerr;
+            lintOpts = options.opts || {};
+
+        if (!lintOpts.hasOwnProperty('maxerr')) {
+            lintOpts.maxerr = 30;
+        }
 
         this.filesSrc.every(function (filePath) {
             if (!grunt.file.exists(filePath)) {
@@ -20,19 +29,13 @@ module.exports = function(grunt) {
                 return true;
             }
 
-            lintOpts.maxerr = maxerr;
-
             var fileSrc = grunt.file.read(filePath),
                 issues = htmllint(fileSrc, options);
 
-            maxerr -= issues.length;
+            lintOpts.maxerr -= issues.length;
 
             issues.forEach(function (issue) {
-                var logMsg = grunt.template.process([
-                    '<%= filePath %>: ',
-                    'line <%= issue.line %>, col <%= issue.column %>, ',
-                    '<%= issue.msg %>'
-                ].join(''), { // options
+                var logMsg = grunt.template.process(reportTemplate, {
                     data: {
                         filePath: filePath,
                         issue: issue
@@ -40,12 +43,18 @@ module.exports = function(grunt) {
                 });
                 grunt.log.error(logMsg);
             });
+            if (issues.length <= 0) {
+                grunt.log.verbose.ok(filePath + ' is lint free');
+            }
 
-            return maxerr > 0;
+            return lintOpts.maxerr > 0;
         });
 
         if (this.errorCount && !force) {
             return false;
         }
+
+        grunt.log.ok(this.filesSrc.length + ' html files lint free');
+        return true;
     });
 };

@@ -25,7 +25,7 @@ module.exports = function (grunt) {
                     force: false
                 },
                 src: [
-                    'test/fixtures/style.html'
+                    'test/fixtures/*.html'
                 ]
             }
         },
