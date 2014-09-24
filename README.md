@@ -7,7 +7,7 @@
 
 [![Stories in Ready](https://badge.waffle.io/htmllint/grunt-htmllint.svg?label=ready&title=Ready)](http://waffle.io/htmllint/grunt-htmllint)
 
-> HTML5 linter and validator.
+> Unofficial html5 linter and validator.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -32,59 +32,66 @@ In your project's Gruntfile, add a section named `htmllint` to the data object p
 ```js
 grunt.initConfig({
   htmllint: {
-    options: {
-      // Task-specific options go here.
-    },
     your_target: {
-      // Target-specific file lists and/or options go here.
-    },
+	  options: {
+	    force: false,
+		opts: { /* htmllint options go here */ }
+	  },
+	  src: [
+        'path/to/yo/html_files'
+      ]
+    }
   },
 });
 ```
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### options.force
+Type: `Boolean`
+Default value: `false`
 
-A string value that is used to do something with whatever.
+A boolean value that determines whether or not to fail the build on any lint error. If the value is true, lint errors will not fail the build.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+#### options.opts
+Type: `Object`
+Default value: `{}`
 
-A string value that is used to do something else with whatever else.
+The object passed to [htmllint](https://github.com/htmllint/htmllint) as the `opts` argument.
 
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+In this example the default options are used to lint the html files in `test/fixtures`.
+If any of the html files have any lint error, the task will fail and print the errors
+on the screen.
 
 ```js
 grunt.initConfig({
   htmllint: {
     options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
+    src: [
+      'test/fixtures/*.html'
+    ],
   },
 });
 ```
 
 #### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+In this example, some custom options are passed. If any lint errors occur, they will not
+fail the task, but will still be printed. Also, no more than 5 lint errors will be
+reported. After hitting the maximum number of errors, no more files will be processed.
 
 ```js
 grunt.initConfig({
   htmllint: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      force: true,
+	  opts: { maxerr: 5 }
     },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
+    src: [
+      'test/fixtures/*.html'
+    ],
   },
 });
 ```
@@ -93,4 +100,12 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+
+### v0.1.1
+
+* added `opts.maxerr` option support
+* froze `htmllint` dependency
+
+### v0.1.0
+
+* added a functional implementation, was too lazy to document it
