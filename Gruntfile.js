@@ -22,6 +22,7 @@ module.exports = function (grunt) {
         htmllint: {
             default_options: {
                 options: {
+                    'disallowed-tags': ['style'],
                     force: false
                 },
                 src: [

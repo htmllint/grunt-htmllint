@@ -101,6 +101,10 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+### v0.1.2
+
+* `htmllint` -> 0.0.4
+
 ### v0.1.1
 
 * added `opts.maxerr` option support
