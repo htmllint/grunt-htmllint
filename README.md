@@ -101,6 +101,12 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+### v0.1.6
+
+* `htmllint` -> 0.0.6
+* fixed index errors on multiple files
+* new `htmllint` fixes that stop throws on text elements
+
 ### v0.1.5
 
 * `htmllint` -> 0.0.5
