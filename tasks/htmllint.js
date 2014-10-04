@@ -13,15 +13,13 @@ module.exports = function(grunt) {
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
             force: false,
-            opts: null
+            maxerr: 30
         });
 
         var force = options.force,
-            lintOpts = options.opts || {};
+            errorFiles = 0;
 
-        if (!lintOpts.hasOwnProperty('maxerr')) {
-            lintOpts.maxerr = 30;
-        }
+        delete options.force;
 
         this.filesSrc.every(function (filePath) {
             if (!grunt.file.exists(filePath)) {
@@ -32,7 +30,7 @@ module.exports = function(grunt) {
             var fileSrc = grunt.file.read(filePath),
                 issues = htmllint(fileSrc, options);
 
-            lintOpts.maxerr -= issues.length;
+            options.maxerr -= issues.length;
 
             issues.forEach(function (issue) {
                 var logMsg = grunt.template.process(reportTemplate, {
@@ -45,16 +43,25 @@ module.exports = function(grunt) {
             });
             if (issues.length <= 0) {
                 grunt.log.verbose.ok(filePath + ' is lint free');
+            } else {
+                errorFiles++;
             }
 
-            return lintOpts.maxerr > 0;
+            return options.maxerr > 0;
         });
 
-        if (this.errorCount && !force) {
-            return false;
+        var resultMsg = [
+            errorFiles,
+            ' file(s) had lint errors out of ',
+            this.filesSrc.length, ' file(s).'
+        ].join('');
+
+        if (this.errorCount) {
+            grunt.log.error(resultMsg);
+        } else {
+            grunt.log.ok(resultMsg);
         }
 
-        grunt.log.ok(this.filesSrc.length + ' html files lint free');
-        return true;
+        return (this.errorCount === 0 || force);
     });
 };

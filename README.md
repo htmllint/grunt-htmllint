@@ -101,6 +101,14 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+### v0.1.5
+
+* `htmllint` -> 0.0.5
+* decided to skip some versions to stay closer to the `htmllint` version number
+* should fix line,col output bug
+* fixed result message saying that files were all clean
+* fixed option passing
+
 ### v0.1.2
 
 * `htmllint` -> 0.0.4

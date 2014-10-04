@@ -22,12 +22,21 @@ module.exports = function (grunt) {
         htmllint: {
             default_options: {
                 options: {
-                    'disallowed-tags': ['style'],
-                    force: false
+                    force: true
                 },
                 src: [
                     'test/fixtures/*.html'
                 ]
+            },
+            permissive: {
+                options: {
+                    force: true,
+                    'disable-inline-style': false
+                },
+                src: ['test/fixtures/*.html']
+            },
+            fail: {
+                src: ['test/fixtures/*.html']
             }
         },
 
