@@ -1,9 +1,9 @@
 # grunt-htmllint
 
-[![npm version](http://img.shields.io/npm/v/grunt-htmllint.svg?style=flat-square)](https://npmjs.org/package/htmllint)
-[![license](http://img.shields.io/npm/l/grunt-htmllint.svg?style=flat-square)](https://npmjs.org/package/htmllint)
-[![dependencies](http://img.shields.io/david/htmllint/grunt-htmllint.svg?style=flat-square)](https://david-dm.org/htmllint/htmllint)
-[![devDependencies](http://img.shields.io/david/dev/htmllint/grunt-htmllint.svg?style=flat-square)](https://david-dm.org/htmllint/htmllint)
+[![npm version](http://img.shields.io/npm/v/grunt-htmllint.svg?style=flat-square)](https://npmjs.org/package/grunt-htmllint)
+[![license](http://img.shields.io/npm/l/grunt-htmllint.svg?style=flat-square)](https://npmjs.org/package/grunt-htmllint)
+[![dependencies](http://img.shields.io/david/htmllint/grunt-htmllint.svg?style=flat-square)](https://david-dm.org/htmllint/grunt-htmllint)
+[![devDependencies](http://img.shields.io/david/dev/htmllint/grunt-htmllint.svg?style=flat-square)](https://david-dm.org/htmllint/grunt-htmllint)
 
 [![Stories in Ready](https://badge.waffle.io/htmllint/grunt-htmllint.svg?label=ready&title=Ready)](http://waffle.io/htmllint/grunt-htmllint)
 
