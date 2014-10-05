@@ -10,7 +10,7 @@
   "bugs": {
     "url": "https://github.com/htmllint/grunt-htmllint/issues"
   },
-  "licenses": "ISC",
+  "license": "ISC",
   "engines": {
     "node": ">= 0.8.0"
   },
