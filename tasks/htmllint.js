@@ -15,14 +15,19 @@ module.exports = function(grunt) {
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
             force: false,
-            maxerr: 30
+            maxerr: 30,
+            plugins: []
         });
 
         var force = options.force,
+            plugins = options.plugins,
             errorFiles = 0,
             skippedFiles = 0;
 
+        htmllint.use(plugins);
+
         delete options.force;
+        delete options.plugins;
 
         var lastPromise = Promise.resolve(null);
         this.filesSrc.forEach(function (filePath) {
