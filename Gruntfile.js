@@ -31,7 +31,14 @@ module.exports = function (grunt) {
             permissive: {
                 options: {
                     force: true,
-                    'disable-inline-style': false
+                    'attr-bans': []
+                },
+                src: ['test/fixtures/*.html']
+            },
+            bail: {
+                options: {
+                    force: true,
+                    maxerr: 1
                 },
                 src: ['test/fixtures/*.html']
             },

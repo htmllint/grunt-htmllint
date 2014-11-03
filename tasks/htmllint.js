@@ -8,7 +8,9 @@ var reportTemplate = [
 
 module.exports = function(grunt) {
     grunt.registerMultiTask('htmllint', 'HTML5 linter and validator.', function () {
-        var htmllint = require('htmllint');
+        var htmllint = require('htmllint'),
+            Promise = require('promise');
+        var done = this.async();
 
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
@@ -17,51 +19,71 @@ module.exports = function(grunt) {
         });
 
         var force = options.force,
-            errorFiles = 0;
+            errorFiles = 0,
+            skippedFiles = 0;
 
         delete options.force;
 
-        this.filesSrc.every(function (filePath) {
+        var lastPromise = Promise.resolve(null);
+        this.filesSrc.forEach(function (filePath) {
             if (!grunt.file.exists(filePath)) {
                 grunt.log.warn('Source file "' + filePath + '" not found.');
-                return true;
+                return;
             }
 
-            var fileSrc = grunt.file.read(filePath),
-                issues = htmllint(fileSrc, options);
+            lastPromise = lastPromise.then(function (task) {
+                if (options.maxerr <= 0) {
+                    // don't lint the file
+                    return false;
+                }
 
-            options.maxerr -= issues.length;
+                var fileSrc = grunt.file.read(filePath);
 
-            issues.forEach(function (issue) {
-                var logMsg = grunt.template.process(reportTemplate, {
-                    data: {
-                        filePath: filePath,
-                        issue: issue
-                    }
+                return htmllint(fileSrc, options);
+            }).then(function (issues) {
+                if (issues === false) {
+                    // skipped the file
+                    skippedFiles++;
+                    grunt.log.verbose.warn('Skipped file "' + filePath + '" (maxerr).');
+                    return;
+                }
+
+                issues.forEach(function (issue) {
+                    var logMsg = grunt.template.process(reportTemplate, {
+                        data: {
+                            filePath: filePath,
+                            issue: issue
+                        }
+                    });
+                    grunt.log.error(logMsg);
                 });
-                grunt.log.error(logMsg);
-            });
-            if (issues.length <= 0) {
-                grunt.log.verbose.ok(filePath + ' is lint free');
-            } else {
-                errorFiles++;
-            }
 
-            return options.maxerr > 0;
+                if (issues.length <= 0) {
+                    grunt.log.verbose.ok(filePath + ' is lint free');
+                } else {
+                    errorFiles++;
+                }
+
+                options.maxerr -= issues.length;
+            });
         });
 
-        var resultMsg = [
-            errorFiles,
-            ' file(s) had lint errors out of ',
-            this.filesSrc.length, ' file(s).'
-        ].join('');
+        lastPromise
+            .then(function () {
+                var resultMsg = [
+                    errorFiles,
+                    ' file(s) had lint error out of ',
+                    this.filesSrc.length - skippedFiles, ' file(s).'
+                ].join('');
 
-        if (this.errorCount) {
-            grunt.log.error(resultMsg);
-        } else {
-            grunt.log.ok(resultMsg);
-        }
-
-        return (this.errorCount === 0 || force);
+                if (this.errorCount) {
+                    grunt.log.error(resultMsg);
+                } else {
+                    grunt.log.ok(resultMsg);
+                }
+            }.bind(this))
+            .done(function () {
+                done(this.errorCount === 0 || force);
+            }.bind(this));
     });
 };

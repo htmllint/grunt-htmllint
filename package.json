@@ -1,7 +1,7 @@
 {
   "name": "grunt-htmllint",
-  "description": "HTML5 linter and validator.",
-  "version": "0.1.9",
+  "description": "A grunt plugin for the unofficial HTML5 linter.",
+  "version": "0.1.10",
   "homepage": "https://github.com/htmllint/grunt-htmllint",
   "repository": {
     "type": "git",
@@ -18,7 +18,8 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "htmllint": "^0.0.9"
+    "htmllint": "^0.0.10",
+    "promise": "^6.0.1"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
