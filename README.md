@@ -101,6 +101,16 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+### v0.1.11
+
+* `htmllint` -> 0.0.11
+* added plugin support
+
+### v0.1.10
+
+* `htmllint` -> 0.0.10
+* improved summary text
+
 ### v0.1.9
 
 * `htmllint` -> 0.0.9
