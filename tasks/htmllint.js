@@ -73,7 +73,8 @@ module.exports = function(grunt) {
                 var resultMsg = [
                     errorFiles,
                     ' file(s) had lint error out of ',
-                    this.filesSrc.length - skippedFiles, ' file(s).'
+                    this.filesSrc.length, ' file(s). ',
+                    '(skipped ', skippedFiles, ' files)'
                 ].join('');
 
                 if (this.errorCount) {
