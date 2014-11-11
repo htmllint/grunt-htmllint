@@ -35,7 +35,8 @@ grunt.initConfig({
     your_target: {
 	  options: {
 	    force: false,
-		opts: { /* htmllint options go here */ }
+		plugins: ['htmllint-plugin-name'],
+		/* htmllint options go here */
 	  },
 	  src: [
         'path/to/yo/html_files'
@@ -53,7 +54,13 @@ Default value: `false`
 
 A boolean value that determines whether or not to fail the build on any lint error. If the value is true, lint errors will not fail the build.
 
-#### options.opts
+#### options.plugins
+Type: `Array`
+Default value: `[]`
+
+An array of strings, each of which should be the name of an htmllint plugin to require and use.
+
+#### options (excluding previous options)
 Type: `Object`
 Default value: `{}`
 
