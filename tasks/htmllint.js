@@ -57,7 +57,11 @@ module.exports = function(grunt) {
                     var logMsg = grunt.template.process(reportTemplate, {
                         data: {
                             filePath: filePath,
-                            issue: issue
+                            issue: {
+                                line: issue.line,
+                                column: issue.column,
+                                msg: htmllint.messages.renderIssue(issue)
+                            }
                         }
                     });
                     grunt.log.error(logMsg);

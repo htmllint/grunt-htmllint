@@ -108,6 +108,11 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+### v0.2.0
+
+* `htmllint` -> 0.2.0
+* finally got version numbers to be the same >.>
+
 ### v0.1.12
 
 * `htmllint` -> 0.0.12
