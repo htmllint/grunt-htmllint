@@ -108,6 +108,10 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+### v0.2.1
+
+* released a little too hastily... (fixed a compatibility issue)
+
 ### v0.2.0
 
 * `htmllint` -> 0.2.0
