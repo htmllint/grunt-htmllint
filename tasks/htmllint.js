@@ -6,7 +6,7 @@ var reportTemplate = [
     '<%= issue.msg %>'
 ].join('');
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     grunt.registerMultiTask('htmllint', 'HTML5 linter and validator.', function () {
         var htmllint = require('htmllint'),
             Promise = require('promise');
@@ -16,18 +16,25 @@ module.exports = function(grunt) {
         var options = this.options({
             force: false,
             maxerr: 30,
-            plugins: []
+            plugins: [],
+            htmllintrc: false
         });
 
-        var force = options.force,
-            plugins = options.plugins,
+        var force = options.force;
+        delete options.force;
+
+        if (options.htmllintrc) {
+            options = grunt.file.readJSON('./.htmllintrc');
+        }
+
+        var plugins = options.plugins || [],
             errorFiles = 0,
             skippedFiles = 0;
 
         htmllint.use(plugins);
 
-        delete options.force;
         delete options.plugins;
+        delete options.htmllintrc;
 
         var lastPromise = Promise.resolve(null);
         this.filesSrc.forEach(function (filePath) {

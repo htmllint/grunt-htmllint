@@ -24,9 +24,14 @@ module.exports = function (grunt) {
                 options: {
                     force: true
                 },
-                src: [
-                    'test/fixtures/*.html'
-                ]
+                src: ['test/fixtures/*.html']
+            },
+            rc_file: {
+                options: {
+                    force: true,
+                    htmllintrc: true
+                },
+                src: ['test/fixtures/*.html']
             },
             permissive: {
                 options: {
