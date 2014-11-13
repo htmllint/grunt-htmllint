@@ -60,6 +60,13 @@ Default value: `[]`
 
 An array of strings, each of which should be the name of an htmllint plugin to require and use.
 
+#### options.htmllintrc
+Type: `Boolean`
+Default value: `false`
+
+if set, a `.htmllintrc` file will be loaded (relative to your `Gruntfile.js`). It must
+be a valid `json` file.
+
 #### options (excluding previous options)
 Type: `Object`
 Default value: `{}`
@@ -107,6 +114,11 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+
+### v0.2.2
+
+* added error codes to the output
+* added `htmllintrc` option, allows users to specify configuration in a separate file
 
 ### v0.2.1
 
