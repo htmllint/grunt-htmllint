@@ -60,7 +60,7 @@ module.exports = function(grunt) {
                             issue: {
                                 line: issue.line,
                                 column: issue.column,
-                                msg: htmllint.messages.renderIssue(issue)
+                                msg: issue.msg || htmllint.messages.renderIssue(issue)
                             }
                         }
                     });
