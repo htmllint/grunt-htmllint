@@ -1,7 +1,7 @@
 'use strict';
 
 var reportTemplate = [
-    '<%= filePath %>: ',
+    '<%= filePath %>: (<%= issue.code %>), ',
     'line <%= issue.line %>, col <%= issue.column %>, ',
     '<%= issue.msg %>'
 ].join('');
@@ -65,6 +65,7 @@ module.exports = function (grunt) {
                         data: {
                             filePath: filePath,
                             issue: {
+                                code: issue.code,
                                 line: issue.line,
                                 column: issue.column,
                                 msg: issue.msg || htmllint.messages.renderIssue(issue)
