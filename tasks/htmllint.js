@@ -15,7 +15,7 @@ module.exports = function (grunt) {
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
             force: false,
-            maxerr: 30,
+            maxerr: Infinity,
             plugins: [],
             htmllintrc: false
         });
@@ -25,6 +25,10 @@ module.exports = function (grunt) {
 
         if (options.htmllintrc) {
             options = grunt.file.readJSON('./.htmllintrc');
+
+            if (!options.hasOwnProperty('maxerr')) {
+                options.maxerr = Infinity;
+            }
         }
 
         var plugins = options.plugins || [],
