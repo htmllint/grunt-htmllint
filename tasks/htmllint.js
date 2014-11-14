@@ -33,7 +33,8 @@ module.exports = function (grunt) {
 
         var plugins = options.plugins || [],
             errorFiles = 0,
-            skippedFiles = 0;
+            skippedFiles = 0,
+            errorAmount = 0;
 
         htmllint.use(plugins);
 
@@ -85,13 +86,16 @@ module.exports = function (grunt) {
                     errorFiles++;
                 }
 
+                errorAmount += issues.length;
                 options.maxerr -= issues.length;
             });
         });
 
         lastPromise
             .then(function () {
+
                 var resultMsg = [
+                    'encountered ', errorAmount, ' errors in total\n',
                     errorFiles,
                     ' file(s) had lint error out of ',
                     this.filesSrc.length, ' file(s). ',
