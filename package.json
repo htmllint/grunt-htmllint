@@ -18,7 +18,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "htmllint": "^0.2.2",
+    "htmllint": "^0.2.3",
     "promise": "^6.0.1"
   },
   "devDependencies": {
