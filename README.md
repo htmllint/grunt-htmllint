@@ -120,6 +120,10 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+### v0.2.5
+
+* `htmllint` -> 0.2.3
+
 ### v0.2.4
 
 * `htmllint` -> 0.2.2
