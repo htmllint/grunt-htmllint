@@ -24,7 +24,8 @@ module.exports = function (grunt) {
         delete options.force;
 
         if (options.htmllintrc) {
-            options = grunt.file.readJSON('./.htmllintrc');
+	    var htmllintrcPath = (options.htmllintrc === true ? '.htmllintrc' : options.htmllintrc);
+            options = grunt.file.readJSON(htmllintrcPath);
 
             if (!options.hasOwnProperty('maxerr')) {
                 options.maxerr = Infinity;

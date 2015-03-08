@@ -66,11 +66,12 @@ Default value: `[]`
 An array of strings, each of which should be the name of an htmllint plugin to require and use.
 
 #### options.htmllintrc
-Type: `Boolean`
+Type: `Boolean` or `String`
 Default value: `false`
 
-if set, a `.htmllintrc` file will be loaded (relative to your `Gruntfile.js`). It must
-be a valid `json` file.
+If set to true, a `.htmllintrc` file will be loaded (relative to your `Gruntfile.js`) and
+will override the options argument (options.force will no be overriden).
+If set to a string, the file path contained in the string will be loaded.
 
 #### options (excluding previous options)
 Type: `Object`
