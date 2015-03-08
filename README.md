@@ -121,6 +121,10 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+### v0.2.6
+
+* changed `options.htmllintrc` to allow specifying path to an htmllintrc file (#11)
+
 ### v0.2.5
 
 * `htmllint` -> 0.2.3
