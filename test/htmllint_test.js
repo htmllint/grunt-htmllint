@@ -1,48 +1,105 @@
 'use strict';
 
-var grunt = require('grunt');
+var exec = require('child_process').exec;
 
-/*
-  ======== A Handy Little Nodeunit Reference ========
-  https://github.com/caolan/nodeunit
-
-  Test methods:
-    test.expect(numAssertions)
-    test.done()
-  Test assertions:
-    test.ok(value, [message])
-    test.equal(actual, expected, [message])
-    test.notEqual(actual, expected, [message])
-    test.deepEqual(actual, expected, [message])
-    test.notDeepEqual(actual, expected, [message])
-    test.strictEqual(actual, expected, [message])
-    test.notStrictEqual(actual, expected, [message])
-    test.throws(block, [error], [message])
-    test.doesNotThrow(block, [error], [message])
-    test.ifError(value)
-*/
+var REG_TOTAL = /\d+(?= errors in total)/gm;
+var REG_CODES = /E\d+(?=\))/gm;
 
 exports.htmllint = {
-  setUp: function(done) {
-    // setup here if necessary
-    done();
+  default_options: function(test) { 
+    exec('grunt htmllint:default_options', function(err, output) {
+
+      var total = Number(output.match(REG_TOTAL)[0]);
+      var codes = output.match(REG_CODES);
+
+      test.equal(err, undefined);
+      test.ok(output);
+
+      test.equal(total, 8);
+      test.ok(codes.indexOf('E001') !== -1);
+      
+      test.done();
+    });
   },
-  default_options: function(test) {
-    test.expect(1);
 
-    var actual = grunt.file.read('tmp/default_options');
-    var expected = grunt.file.read('test/expected/default_options');
-    test.equal(actual, expected, 'should describe what the default behavior is.');
+  rc_file: function(test) {
+    exec('grunt htmllint:rc_file', function(err, output) {
 
-    test.done();
+      var total = Number(output.match(REG_TOTAL)[0]);
+      var codes = output.match(REG_CODES);
+
+      test.equal(err, undefined);
+      test.ok(output);
+
+      test.equal(total, 7);
+      test.ok(codes.indexOf('E001') === -1);
+
+      test.done();
+    });
   },
-  custom_options: function(test) {
-    test.expect(1);
 
-    var actual = grunt.file.read('tmp/custom_options');
-    var expected = grunt.file.read('test/expected/custom_options');
-    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+  permissive: function(test) {
+    exec('grunt htmllint:permissive', function(err, output) {
 
-    test.done();
+      var total = Number(output.match(REG_TOTAL)[0]);
+      var codes = output.match(REG_CODES);
+
+      test.equal(err, undefined);
+      test.ok(output);
+
+      test.equal(total, 7);
+      test.ok(codes.indexOf('E001') === -1);
+
+      test.done();
+    });
+  },
+
+
+  bail: function(test) {
+    exec('grunt htmllint:bail', function(err, output) {
+
+      var total = Number(output.match(REG_TOTAL)[0]);
+      var codes = output.match(REG_CODES);
+
+      test.equal(err, undefined);
+      test.ok(output);
+
+      test.equal(total, 1);
+      test.ok(codes.indexOf('E001') === -1);
+
+      test.done();
+    });
+  },
+
+  htmllintrc: function(test) {
+    exec('grunt htmllint:htmllintrc', function(err, output) {
+
+      var total = Number(output.match(REG_TOTAL)[0]);
+      var codes = output.match(REG_CODES);
+
+      test.equal(err, undefined);
+      test.ok(output);
+
+      test.equal(total, 7);
+      test.ok(codes.indexOf('E001') === -1);
+
+      test.done();
+    });
+  },
+
+  fail: function(test) {
+    exec('grunt htmllint:fail', function(err, output) {
+
+      var total = Number(output.match(REG_TOTAL)[0]);
+      var codes = output.match(REG_CODES);
+
+      test.ok(err);
+      test.ok(output);
+
+      test.equal(total, 8);
+      test.ok(codes.indexOf('E001') !== -1);
+
+      test.done();
+    });
   },
 };

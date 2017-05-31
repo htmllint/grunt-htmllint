@@ -107,7 +107,7 @@ grunt.initConfig({
   htmllint: {
     options: {
       force: true,
-	  opts: { maxerr: 5 }
+      opts: { maxerr: 5 }
     },
     src: [
       'test/fixtures/*.html'
