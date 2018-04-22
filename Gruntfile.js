@@ -13,11 +13,6 @@ module.exports = function (grunt) {
             }
         },
 
-        // Before generating any new files, remove any previously-created files.
-        clean: {
-            tests: ['tmp']
-        },
-
         // Configuration to be run (and then tested).
         htmllint: {
             default_options: {
@@ -47,13 +42,13 @@ module.exports = function (grunt) {
                 },
                 src: ['test/fixtures/*.html']
             },
-	    htmllintrc: {
-		options: {
-		    force: true,
-		    htmllintrc: 'test/fixtures/testrc.js'
-		},
-		src: ['test/fixtures/*.html']
-	    },
+            htmllintrc: {
+                options: {
+                    force: true,
+                    htmllintrc: 'test/fixtures/testrc.js'
+                },
+                src: ['test/fixtures/*.html']
+            },
             fail: {
                 src: ['test/fixtures/*.html']
             }
@@ -70,14 +65,8 @@ module.exports = function (grunt) {
 
     // These plugins provide necessary tasks.
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
-    // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-    // plugin's task(s), then test the result.
-    grunt.registerTask('test', ['clean', 'htmllint', 'nodeunit']);
-
     // By default, lint and run all tests.
-    grunt.registerTask('default', ['jshint', 'test']);
-
+    grunt.registerTask('default', ['jshint', 'nodeunit']);
 };

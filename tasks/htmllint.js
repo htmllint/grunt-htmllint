@@ -24,7 +24,7 @@ module.exports = function (grunt) {
         delete options.force;
 
         if (options.htmllintrc) {
-	    var htmllintrcPath = (options.htmllintrc === true ? '.htmllintrc' : options.htmllintrc);
+        var htmllintrcPath = (options.htmllintrc === true ? '.htmllintrc' : options.htmllintrc);
             options = grunt.file.readJSON(htmllintrcPath);
 
             if (!options.hasOwnProperty('maxerr')) {
@@ -89,6 +89,8 @@ module.exports = function (grunt) {
 
                 errorAmount += issues.length;
                 options.maxerr -= issues.length;
+            }).catch(function (err) {
+                grunt.log.error('Could not lint file ' + filePath + '; It might be malformed.', err);
             });
         });
 
