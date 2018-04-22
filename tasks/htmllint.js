@@ -15,7 +15,6 @@ module.exports = function (grunt) {
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
             force: false,
-            maxerr: Infinity,
             plugins: [],
             htmllintrc: false
         });
@@ -24,13 +23,10 @@ module.exports = function (grunt) {
         delete options.force;
 
         if (options.htmllintrc) {
-        var htmllintrcPath = (options.htmllintrc === true ? '.htmllintrc' : options.htmllintrc);
+            var htmllintrcPath = options.htmllintrc === true ? '.htmllintrc' : options.htmllintrc;
             options = grunt.file.readJSON(htmllintrcPath);
-
-            if (!options.hasOwnProperty('maxerr')) {
-                options.maxerr = Infinity;
-            }
         }
+        var hasmax = options.hasOwnProperty('maxerr') && options.maxerr;
 
         var plugins = options.plugins || [],
             errorFiles = 0,
@@ -50,7 +46,7 @@ module.exports = function (grunt) {
             }
 
             lastPromise = lastPromise.then(function (task) {
-                if (options.maxerr <= 0) {
+                if (hasmax && options.maxerr <= 0) {
                     // don't lint the file
                     return false;
                 }
@@ -88,7 +84,9 @@ module.exports = function (grunt) {
                 }
 
                 errorAmount += issues.length;
-                options.maxerr -= issues.length;
+                if (hasmax) {
+                    options.maxerr -= issues.length;
+                }
             }).catch(function (err) {
                 grunt.log.error('Could not lint file ' + filePath + '; It might be malformed.', err);
             });

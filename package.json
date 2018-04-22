@@ -18,16 +18,16 @@
     "test": "grunt"
   },
   "dependencies": {
-    "htmllint": "^0.6.0"
+    "htmllint": "^0.7.2"
   },
   "devDependencies": {
-    "grunt": "^1.0.1",
+    "grunt": "^1.0.2",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-nodeunit": "^1.0.0",
-    "promise": "^7.1.1"
+    "promise": "^8.0.1"
   },
   "peerDependencies": {
-    "grunt": "^1.0.1"
+    "grunt": "^1.0.2"
   },
   "keywords": [
     "gruntplugin"
