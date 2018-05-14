@@ -77,8 +77,6 @@ If set to a string, the file path contained in the string will be loaded.
 Type: `Object`
 Default value: `{}`
 
-The object passed to [htmllint](https://github.com/htmllint/htmllint) as the `opts` argument.
-
 ### Usage Examples
 
 #### Default Options
@@ -107,7 +105,7 @@ grunt.initConfig({
   htmllint: {
     options: {
       force: true,
-      opts: { maxerr: 5 }
+      maxerr: 5
     },
     src: [
       'test/fixtures/*.html'
