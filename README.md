@@ -40,7 +40,7 @@ grunt.initConfig({
     your_target: {
 	  options: {
 	    force: false,
-		plugins: ['htmllint-plugin-name'],
+		  plugins: ['htmllint-plugin-name'],
 		/* htmllint options go here */
 	  },
 	  src: [
@@ -72,6 +72,12 @@ Default value: `false`
 If set to true, a `.htmllintrc` file will be loaded (relative to your `Gruntfile.js`) and
 will override the options argument (options.force will no be overriden).
 If set to a string, the file path contained in the string will be loaded.
+
+#### options.allowTags
+Type: `Array`
+Default value: undefined
+
+Applies only to the specified tag. If not set, the entire file is targeted.
 
 #### options (excluding previous options)
 Type: `Object`

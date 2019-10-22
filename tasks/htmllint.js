@@ -9,7 +9,8 @@ var reportTemplate = [
 module.exports = function (grunt) {
     grunt.registerMultiTask('htmllint', 'HTML5 linter and validator.', function () {
         var htmllint = require('htmllint'),
-            Promise = require('promise');
+            Promise = require('promise'),
+            striptags = require('striptags');
         var done = this.async();
 
         // Merge task-specific and/or target-specific options with these defaults.
@@ -21,6 +22,9 @@ module.exports = function (grunt) {
 
         var force = options.force;
         delete options.force;
+
+        var allowTags = options.allowTags;
+        delete options.allowTags;
 
         if (options.htmllintrc) {
             var htmllintrcPath = options.htmllintrc === true ? '.htmllintrc' : options.htmllintrc;
@@ -52,7 +56,9 @@ module.exports = function (grunt) {
                 }
 
                 var fileSrc = grunt.file.read(filePath);
-
+                if(allowTags){
+                    fileSrc = striptags(fileSrc, allowTags);
+                }
                 return htmllint(fileSrc, options);
             }).then(function (issues) {
                 if (issues === false) {

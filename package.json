@@ -2,13 +2,13 @@
   "name": "grunt-htmllint",
   "description": "A grunt plugin for the unofficial HTML5 linter.",
   "version": "0.3.0",
-  "homepage": "https://github.com/htmllint/grunt-htmllint",
+  "homepage": "https://github.com/unirobot/grunt-htmllint",
   "repository": {
     "type": "git",
-    "url": "https://github.com/htmllint/grunt-htmllint.git"
+    "url": "https://github.com/unirobot/grunt-htmllint.git"
   },
   "bugs": {
-    "url": "https://github.com/htmllint/grunt-htmllint/issues"
+    "url": "https://github.com/unirobot/grunt-htmllint/issues"
   },
   "license": "ISC",
   "engines": {
@@ -18,7 +18,8 @@
     "test": "grunt"
   },
   "dependencies": {
-    "htmllint": "^0.7.2"
+    "htmllint": "^0.7.2",
+    "striptags": "^3.1.1"
   },
   "devDependencies": {
     "grunt": "^1.0.2",
